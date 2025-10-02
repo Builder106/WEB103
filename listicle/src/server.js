@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import { isDbEnabled, getAllItems, getItemBySlug } from './db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,8 +23,9 @@ function renderBase(innerHtml) {
   return base.replace('<div id="app"></div>', innerHtml);
 }
 
-app.get('/', (req, res) => {
-  const itemsHtml = dataset.map(item =>
+app.get('/', async (req, res) => {
+  const items = isDbEnabled ? await getAllItems() : dataset;
+  const itemsHtml = items.map(item =>
     `<article class="card" data-testid="list-item">
       <img src="${item.image}" alt="${item.title}" />
       <h2><a href="/items/${item.slug}">${item.title}</a></h2>
@@ -34,8 +36,8 @@ app.get('/', (req, res) => {
   res.send(renderBase(`<section class="grid">${itemsHtml}</section>`));
 });
 
-app.get('/items/:slug', (req, res, next) => {
-  const item = dataset.find(i => i.slug === req.params.slug);
+app.get('/items/:slug', async (req, res, next) => {
+  const item = isDbEnabled ? await getItemBySlug(req.params.slug) : dataset.find(i => i.slug === req.params.slug);
   if (!item) return next();
   const pairs = Object.entries(item)
     .map(([k, v]) => `<p><strong>${k}:</strong> ${v}</p>`) 

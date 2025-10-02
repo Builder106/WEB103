@@ -5,7 +5,7 @@ describe('Listicle routes', () => {
   test('GET / should render title and at least 5 items', async () => {
     const res = await request(app).get('/');
     expect(res.status).toBe(200);
-    expect(res.text).toMatch(/<h1>.*Listicle.*<\/h1>/i);
+    expect(res.text).toMatch(/<h1[^>]*>.*Listicle.*<\/h1>/i);
     const count = (res.text.match(/data-testid="list-item"/g) || []).length;
     expect(count).toBeGreaterThanOrEqual(5);
   });

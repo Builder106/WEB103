@@ -11,18 +11,16 @@ if (isDbEnabled) {
 }
 
 export async function query(text, params) {
-  if (!isDbEnabled) throw new Error('DB not enabled');
+  if (!isDbEnabled) throw new Error('DATABASE_URL is required. No fallback is available.');
   return pool.query(text, params);
 }
 
 export async function getAllItems() {
-  if (!isDbEnabled) return [];
   const { rows } = await query('SELECT * FROM items ORDER BY id ASC');
   return rows;
 }
 
 export async function getItemBySlug(slug) {
-  if (!isDbEnabled) return null;
   const { rows } = await query('SELECT * FROM items WHERE slug=$1 LIMIT 1', [slug]);
   return rows[0] || null;
 }

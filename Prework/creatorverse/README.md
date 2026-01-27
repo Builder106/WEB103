@@ -11,6 +11,7 @@ Time spent: **20** hours
 The following **required** functionality is completed:
 
 <!-- 👉🏿👉🏿👉🏿 Make sure to check off completed functionality below -->
+
 - [X] **A logical component structure in React is used to create the frontend of the app**
 - [X] **At least five content creators are displayed on the homepage of the app**
 - [X] **Each content creator item includes their name, a link to their channel/page, and a short description of their content**
@@ -35,11 +36,11 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented required features:
 
-👉🏿[![Video Walkthrough](https://img.youtube.com/vi/nn0uDQM8x-8/hqdefault.jpg)](https://www.youtube.com/watch?v=nn0uDQM8x-8 "Video Walkthrough")
+👉🏿[![Video Walkthrough](https://img.youtube.com/vi/ZJb75sQEilI/maxresdefault.jpg "WEB103 Prework")](https://www.youtube.com/watch?v=nn0uDQM8x-8 "Video Walkthrough")
 
 ## License
 
-Copyright [2025] [Olayinka Vaughan]
+Copyright [2026] [Olayinka Vaughan]
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 

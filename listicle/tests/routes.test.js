@@ -1,5 +1,6 @@
 import request from 'supertest';
 import { app } from '../src/server.js';
+import { closeDb } from '../src/db.js';
 
 describe('Listicle routes', () => {
   test('GET / should render title and at least 5 items', async () => {
@@ -33,5 +34,9 @@ describe('Listicle routes', () => {
     const res = await request(app).get('/not-a-real-route');
     expect(res.status).toBe(404);
     expect(res.text.toLowerCase()).toContain('page not found');
+  });
+
+  afterAll(async () => {
+    await closeDb();
   });
 });

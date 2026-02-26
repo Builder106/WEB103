@@ -26,7 +26,7 @@ The following **stretch** features are implemented:
 
 Here's a walkthrough of implemented required features:
 
-<img src='https://imgur.com/a/7f4B2sz' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+[![Video Walkthrough](https://i.imgur.com/VtzziKw.gif)](https://imgur.com/gallery/web103-listicle-part-1-7f4B2sz#VtzziKw)
 
 I used a small script that drives Chrome and records the session (run `node src/scripts/recordSession.mjs` with the app already running)—so the walkthrough is fully automated and I didn’t have to sit there screen-recording by hand.
 
@@ -46,7 +46,7 @@ npm run start
 
 ## License
 
-Copyright 2025 Yinka Vaughan
+Copyright 2026 Yinka Vaughan
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 

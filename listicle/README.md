@@ -26,7 +26,7 @@ The following **stretch** features are implemented:
 
 Here's a walkthrough of implemented required features:
 
-[![Video Walkthrough](https://imgur.com/gallery/web103-listicle-part-1-Syz9VAF.gif)](https://imgur.com/gallery/web103-listicle-part-1-Syz9VAF)
+[![**Video Walkthrough**](https://i.imgur.com/lnI6xMk.mp4)](https://imgur.com/gallery/web103-listicle-part-1-Syz9VAF)
 
 I used a small script that drives Chrome and records the session (run `node src/scripts/recordSession.mjs` with the app already running)—so the walkthrough is fully automated and I didn’t have to sit there screen-recording by hand.
 

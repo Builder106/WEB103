@@ -1,6 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import { execFileSync } from 'child_process';
 import { chromium } from 'playwright';
+
+const TRIM_FIRST_SECONDS = 3;
 
 const SELECTORS = {
   listLink: (slug) => `a[href="/items/${slug}"]`,
@@ -130,6 +133,7 @@ const page = await context.newPage();
 const viewport = { width: 1440, height: 900 };
 const cursorPos = { x: viewport.width / 2, y: viewport.height / 2 };
 await page.goto('http://localhost:3000/', { waitUntil: 'networkidle' });
+await delay(1500);
 await injectCursor(page);
 await page.evaluate((p) => window.__setRecorderCursor(p.x, p.y), cursorPos);
 await humanDelay(600, 1100);
@@ -205,4 +209,14 @@ const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19).re
 const newName = `listicle-${timestamp}.webm`;
 const newPath = path.join(outputDir, newName);
 fs.renameSync(videoPath, newPath);
+
+const tempPath = path.join(outputDir, `trimmed-${newName}`);
+execFileSync('ffmpeg', [
+  '-y', '-i', newPath,
+  '-ss', String(TRIM_FIRST_SECONDS),
+  '-c:v', 'libvpx', '-deadline', 'good', '-b:v', '750k',
+  '-an', tempPath
+], { stdio: 'inherit' });
+fs.unlinkSync(newPath);
+fs.renameSync(tempPath, newPath);
 console.log(newPath);

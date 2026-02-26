@@ -26,9 +26,9 @@ The following **stretch** features are implemented:
 
 Here's a walkthrough of implemented required features:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://imgur.com/a/7f4B2sz' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-GIF created with ...
+I used a small script that drives Chrome and records the session (run `node src/scripts/recordSession.mjs` with the app already running)—so the walkthrough is fully automated and I didn’t have to sit there screen-recording by hand.
 
 ## How to run locally
 

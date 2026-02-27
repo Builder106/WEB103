@@ -9,5 +9,6 @@ node_modules
 .vscode/
 .cursor/
 
-# Recordings
+# Recordings and walkthrough videos
 listicle/recordings/
+Prework/*.webm

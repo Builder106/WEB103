@@ -7,8 +7,6 @@ import { getAllItems, getItemBySlug } from './db.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// No dataset fallback; DB required
-
 export const app = express();
 app.use(express.static(path.join(__dirname, '..', 'public')));
 

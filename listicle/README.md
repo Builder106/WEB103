@@ -1,8 +1,8 @@
-# WEB103 Project 1 - Listicle Part 1
+# WEB103 Project 2 - Listicle Part 2
 
 Submitted by: **Yinka Vaughan**
 
-About this web app: **A listicle that showcases local music events. It uses only HTML, CSS, and JavaScript (no frontend framework), server-rendered via Express and styled with PicoCSS. Each event has a list view and a unique detail page.**
+About this web app: **A listicle that showcases local music events. It uses only HTML, CSS, and JavaScript (no frontend framework), server-rendered via Express and styled with PicoCSS. Data is served from a PostgreSQL database; each event has a list view and a unique detail page.**
 
 Time spent: **10** hours
 
@@ -11,38 +11,40 @@ Time spent: **10** hours
 The following **required** functionality is completed:
 
 - [x] **The web app uses only HTML, CSS, and JavaScript without a frontend framework**
-- [x] **The web app displays a title**
-- [x] **The web app displays at least five unique list items, each with at least three displayed attributes (e.g. title, text, image)**
-- [x] **The user can click on each item in the list to see a detailed view of it, including all database fields**
-- [x] **Each detail view is a unique endpoint (e.g. localhost:3000/items/event-1, localhost:3000/items/event-2)**
-- [x] **The web app serves an appropriate 404 page when no matching route is defined**
-- [x] **The web app is styled using PicoCSS**
+- [x] **The web app is connected to a PostgreSQL database, with an appropriately structured database table for the list items**
+  - [x] **NOTE: Your walkthrough added to the README must include a view of your Render dashboard demonstrating that your Postgres database is available**
+  - [x] **NOTE: Your walkthrough added to the README must include a demonstration of your table contents. Use the psql command 'SELECT * FROM tablename;' to display your table contents.**
 
-The following **stretch** features are implemented:
+The following **optional** features are implemented:
 
-- [x] **The web app displays items in a unique format (cards rather than a plain list)**
+- [x] The user can search for items by a specific attribute (by category and by title)
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented required features:
 
-[![Video Walkthrough](https://i.imgur.com/lnI6xMk.gif)](https://imgur.com/gallery/web103-listicle-part-1-Syz9VAF)
+<img src='https://imgur.com/a/y87WaiC.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-I used a small script that drives Chrome and records the session (run `node src/scripts/recordSession.mjs` with the app already running)—so the walkthrough is fully automated and I didn’t have to sit there screen-recording by hand.
+Include:
+1. A view of your Render dashboard showing the Postgres database is available.
+2. A terminal/screen showing: `psql <your-connection-string> -c "SELECT * FROM items;"` (or your table name) with the table contents visible.
+3. The app running (list page and at least one detail page).
 
 ## How to run locally
 
 ```bash
-# Install dependencies
 npm install
-
-# Run tests
+cp .env.example .env
+# Set DATABASE_URL in .env to your Postgres connection string
+npm run db:setup
 npm test
-
-# Start the server
 npm run start
 # Visit http://localhost:3000
 ```
+
+## Notes
+
+The database schema and seed were created in Project 1. The `items` table has columns: id, slug, title, text, category, price, image. Search (stretch) filters the list by category or by a query string matched against title/category.
 
 ## License
 
@@ -52,4 +54,4 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 
 > http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions in the License.

@@ -8,7 +8,10 @@ async function main() {
     console.error('DATABASE_URL not set. Skipping DB setup.');
     process.exit(0);
   }
-  const client = new Client({ connectionString: process.env.DATABASE_URL });
+  const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: process.env.DATABASE_URL?.includes('render.com') ? { rejectUnauthorized: false } : undefined,
+  });
   await client.connect();
   try {
     await client.query(`
@@ -27,10 +30,10 @@ async function main() {
       await client.query(
         `INSERT INTO items (slug, title, text, category, price, image) VALUES
           ('event-1','Event 1','Description 1','music','$10','https://picsum.photos/seed/event1/600/400'),
-          ('event-2','Event 2','Description 2','music','$15','https://picsum.photos/seed/event2/600/400'),
-          ('event-3','Event 3','Description 3','music','$20','https://picsum.photos/seed/event3/600/400'),
-          ('event-4','Event 4','Description 4','music','$25','https://picsum.photos/seed/event4/600/400'),
-          ('event-5','Event 5','Description 5','music','$30','https://picsum.photos/seed/event5/600/400')`
+          ('event-2','Event 2','Description 2','festival','$15','https://picsum.photos/seed/event2/600/400'),
+          ('event-3','Event 3','Description 3','open-mic','$20','https://picsum.photos/seed/event3/600/400'),
+          ('event-4','Event 4','Description 4','workshop','$25','https://picsum.photos/seed/event4/600/400'),
+          ('event-5','Event 5','Description 5','student-showcase','$30','https://picsum.photos/seed/event5/600/400')`
       );
       console.log('Seeded items table.');
     } else {

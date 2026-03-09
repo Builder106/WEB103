@@ -23,12 +23,7 @@ The following **optional** features are implemented:
 
 Here's a walkthrough of implemented required features:
 
-<img src='https://imgur.com/a/y87WaiC.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-
-Include:
-1. A view of your Render dashboard showing the Postgres database is available.
-2. A terminal/screen showing: `psql <your-connection-string> -c "SELECT * FROM items;"` (or your table name) with the table contents visible.
-3. The app running (list page and at least one detail page).
+[![Video Walkthrough](https://i.imgur.com/y87WaiC.gif)](https://imgur.com/gallery/y87WaiC)
 
 ## How to run locally
 

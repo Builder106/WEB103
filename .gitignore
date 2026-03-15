@@ -10,5 +10,5 @@ node_modules
 .cursor/
 
 # Recordings and walkthrough videos
-listicle/recordings/
+**/recordings/
 Prework/*.webm

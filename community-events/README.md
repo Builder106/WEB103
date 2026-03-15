@@ -27,17 +27,13 @@ The following **optional** features are implemented:
 - [x] Events display a countdown showing the time remaining before that event
   - [x] Events appear with different formatting when the event has passed (ex. negative time, indication the event has passed, crossed out, etc.).
 
-The following **additional** features are implemented:
-
-- [ ] List anything else that you added to improve the site's functionality!
-
 ## Video Walkthrough
 
 Here's a walkthrough of implemented required features:
 
 [![Video Walkthrough](https://i.imgur.com/i8uOtP3.gif)](https://imgur.com/a/web103-community-events-week-3-lDcv8s9)
 
-GIF created with Kap
+GIF created with Imgur
 
 ## Notes
 

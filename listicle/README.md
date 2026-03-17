@@ -23,7 +23,7 @@ The following **optional** features are implemented:
 
 Here's a walkthrough of implemented required features:
 
-[![Video Walkthrough](https://i.imgur.com/c9gRu5m.gif)](https://imgur.com/a/web103-listicle-part-2-y87WaiC)
+[![Video Walkthrough](https://i.imgur.com/qTKBlbj.gif)](https://imgur.com/a/web103-listicle-part-2-y87WaiC)
 
 ## How to run locally
 

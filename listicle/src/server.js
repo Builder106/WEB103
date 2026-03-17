@@ -74,8 +74,40 @@ app.get('/items/:slug', async (req, res, next) => {
   res.send(renderBase(html));
 });
 
+app.get('/debug/db', async (req, res) => {
+  const items = await getAllItems({});
+  const rows = items.slice(0, 10).map((item) => {
+    return `<tr>
+      <td><code>${escapeAttr(item.slug)}</code></td>
+      <td>${escapeAttr(item.title)}</td>
+      <td>${escapeAttr(item.category)}</td>
+      <td>${escapeAttr(item.price)}</td>
+    </tr>`;
+  }).join('');
+
+  const html = `
+    <a class="back-link" href="/">← Back to list</a>
+    <h2>DB Preview</h2>
+    <p class="muted">Showing up to 10 rows from <code>items</code>.</p>
+    <div class="table-wrap">
+      <table role="table" aria-label="Items table preview">
+        <thead>
+          <tr>
+            <th scope="col">slug</th>
+            <th scope="col">title</th>
+            <th scope="col">category</th>
+            <th scope="col">price</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
+  res.send(renderBase(html));
+});
+
 app.use((req, res) => {
-  res.status(404).send(renderBase('<h2>Page not found</h2>'));
+  res.status(404).send(renderBase('<h2>Page not found</h2><a class="back-link" href="/">← Back to list</a>'));
 });
 
 if (process.env.NODE_ENV !== 'test') {

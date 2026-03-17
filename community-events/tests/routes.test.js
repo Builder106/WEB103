@@ -16,6 +16,12 @@ describe('Week 3 app shell routes', () => {
     expect(res.text).toContain('<div id="app"></div>');
   });
 
+  test('GET /debug serves DB preview shell URL', async () => {
+    const res = await request(app).get('/debug');
+    expect(res.status).toBe(200);
+    expect(res.text).toContain('<div id="app"></div>');
+  });
+
   afterAll(async () => {
     await closeDb();
   });

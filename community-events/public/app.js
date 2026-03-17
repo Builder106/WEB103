@@ -180,6 +180,88 @@ function EventDetailPage({ slug }) {
    `;
 }
 
+function DebugPage() {
+  const [info, setInfo] = useState(null);
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let cancelled = false;
+    async function run() {
+      setLoading(true);
+      setError('');
+      try {
+        const [healthRes, eventsRes] = await Promise.all([
+          fetch('/api/_debug/db'),
+          fetch('/api/_debug/events?limit=10'),
+        ]);
+        const healthJson = await healthRes.json().catch(() => ({}));
+        const eventsJson = await eventsRes.json().catch(() => ({}));
+
+        if (!healthRes.ok) throw new Error(healthJson.error || 'DB health check failed');
+        if (!eventsRes.ok) throw new Error(eventsJson.error || 'DB preview failed');
+
+        if (!cancelled) {
+          setInfo(healthJson);
+          setRows(eventsJson.rows || []);
+        }
+      } catch (err) {
+        if (!cancelled) setError(err.message || 'Request failed');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    run();
+    return () => { cancelled = true; };
+  }, []);
+
+  if (loading) return html`<div className="state">Loading DB preview...</div>`;
+  if (error) return html`<div className="state">${error}</div>`;
+
+  return html`
+    <section>
+      <h2>DB Preview</h2>
+      <p className="subtitle">
+        Connected: <span className="mono">${String(Boolean(info?.dbEnabled))}</span>
+        · events count: <span className="mono">${String(info?.eventsCount ?? '—')}</span>
+      </p>
+      <div className="table-wrap" role="region" aria-label="Events table preview">
+        <table>
+          <thead>
+            <tr>
+              <th>event_slug</th>
+              <th>title</th>
+              <th>location</th>
+              <th>starts_at</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.map((r) => html`
+              <tr key=${r.event_slug}>
+                <td><span className="mono">${r.event_slug}</span></td>
+                <td>${r.title}</td>
+                <td><span className="mono">${r.location_slug}</span></td>
+                <td><span className="mono">${formatDate(r.starts_at)}</span></td>
+              </tr>
+            `)}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  `;
+}
+
+function NotFoundPage() {
+  return html`
+    <section>
+      <h2>Page not found</h2>
+      <p className="subtitle">That route doesn’t exist in this app.</p>
+      <a className="chip" href="/">Go back home</a>
+    </section>
+  `;
+}
+
 function App() {
   const [locations, setLocations] = useState([]);
   const [events, setEvents] = useState([]);
@@ -190,6 +272,13 @@ function App() {
   const eventSlug = path.startsWith('/events/') && path.split('/').length === 3
   ? path.slice('/events/'.length)
   : '';
+  const isDebug = path === '/debug';
+  const isKnownRoute =
+    path === '/' ||
+    path === '/events' ||
+    isDebug ||
+    Boolean(locationSlug) ||
+    Boolean(eventSlug);
 
   useEffect(() => {
     let cancelled = false;
@@ -229,9 +318,13 @@ function App() {
       ? html`<${EventDetailPage} slug=${eventSlug} />`
       : path === '/events'
         ? html`<${EventsPage} events=${events} locations=${locations} />`
-        : locationSlug
-          ? html`<${LocationDetailPage} slug=${locationSlug} />`
-          : html`<${HomePage} locations=${locations} />`}
+        : isDebug
+          ? html`<${DebugPage} />`
+          : locationSlug
+            ? html`<${LocationDetailPage} slug=${locationSlug} />`
+            : isKnownRoute
+              ? html`<${HomePage} locations=${locations} />`
+              : html`<${NotFoundPage} />`}
   </div>
 `;
 }

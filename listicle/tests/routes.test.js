@@ -44,6 +44,13 @@ describe('Listicle routes', () => {
     expect(res.text.toLowerCase()).toContain('page not found');
   });
 
+  test('GET /debug/db shows DB preview table', async () => {
+    const res = await request(app).get('/debug/db');
+    expect(res.status).toBe(200);
+    expect(res.text).toContain('DB Preview');
+    expect(res.text).toContain('Items table preview');
+  });
+
   afterAll(async () => {
     await closeDb();
   });

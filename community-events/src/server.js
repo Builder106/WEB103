@@ -9,6 +9,7 @@ import {
   getLocations,
   getEventBySlug,
 } from './db.js';
+import { isDbEnabled, query } from './db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -49,6 +50,31 @@ app.get('/api/events/:eventSlug', async (req, res) => {
    res.json(event);
 });
 
+app.get('/api/_debug/db', async (req, res) => {
+  if (!isDbEnabled) {
+    res.status(500).json({ ok: false, dbEnabled: false, error: 'DATABASE_URL is not set' });
+    return;
+  }
+  const { rows } = await query('SELECT COUNT(*)::int AS count FROM events');
+  res.json({ ok: true, dbEnabled: true, eventsCount: rows[0]?.count ?? 0 });
+});
+
+app.get('/api/_debug/events', async (req, res) => {
+  if (!isDbEnabled) {
+    res.status(500).json({ ok: false, dbEnabled: false, error: 'DATABASE_URL is not set' });
+    return;
+  }
+  const limit = Math.max(1, Math.min(25, Number(req.query.limit) || 10));
+  const { rows } = await query(
+    `SELECT id, event_slug, title, starts_at, venue, location_slug, location_name
+     FROM events
+     ORDER BY starts_at ASC
+     LIMIT $1`,
+    [limit]
+  );
+  res.json({ ok: true, limit, rows });
+});
+
 app.get('/', (req, res) => {
   res.send(renderBase());
 });
@@ -64,6 +90,10 @@ app.get('/events', (req, res) => {
 app.get('/events/:eventSlug', (req, res) => {
    res.send(renderBase());
  });
+
+app.get('/debug', (req, res) => {
+  res.send(renderBase());
+});
 
 app.use('/api', (req, res) => {
   res.status(404).json({ error: 'API route not found' });

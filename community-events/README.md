@@ -31,9 +31,7 @@ The following **optional** features are implemented:
 
 Here's a walkthrough of implemented required features:
 
-[![Video Walkthrough](https://i.imgur.com/i8uOtP3.gif)](https://imgur.com/a/web103-community-events-week-3-lDcv8s9)
-
-GIF created with Imgur
+[![Video Walkthrough](https://i.imgur.com/SJaFEAv.gif)](https://imgur.com/a/web103-community-events-week-3-lDcv8s9)
 
 ## Notes
 

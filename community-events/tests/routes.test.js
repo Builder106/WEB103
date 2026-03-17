@@ -22,6 +22,13 @@ describe('Week 3 app shell routes', () => {
     expect(res.text).toContain('<div id="app"></div>');
   });
 
+  test('GET unknown route returns 404 page', async () => {
+    const res = await request(app).get('/this-route-does-not-exist');
+    expect(res.status).toBe(404);
+    expect(res.text).toContain('<h2>Page not found</h2>');
+    expect(res.text).toContain('<div id="app">');
+  });
+
   afterAll(async () => {
     await closeDb();
   });

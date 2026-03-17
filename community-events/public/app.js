@@ -273,6 +273,7 @@ function App() {
   ? path.slice('/events/'.length)
   : '';
   const isDebug = path === '/debug';
+  const isServerNotFound = Boolean(window.__NOT_FOUND__);
   const isKnownRoute =
     path === '/' ||
     path === '/events' ||
@@ -314,7 +315,9 @@ function App() {
       <a className="chip" href="/">Locations</a>
       <a className="chip" href="/events">All Events</a>
     </nav>
-    ${eventSlug
+    ${isServerNotFound
+      ? html`<${NotFoundPage} />`
+      : eventSlug
       ? html`<${EventDetailPage} slug=${eventSlug} />`
       : path === '/events'
         ? html`<${EventsPage} events=${events} locations=${locations} />`

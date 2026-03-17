@@ -17,8 +17,9 @@ const __dirname = path.dirname(__filename);
 export const app = express();
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-function renderBase() {
-  return fs.readFileSync(path.join(__dirname, '..', 'public', 'base.html'), 'utf8');
+function renderBase(innerHtml = '') {
+  const base = fs.readFileSync(path.join(__dirname, '..', 'public', 'base.html'), 'utf8');
+  return base.replace('<div id="app"></div>', `<div id="app">${innerHtml}</div>`);
 }
 
 app.get('/api/locations', async (req, res) => {
@@ -100,7 +101,15 @@ app.use('/api', (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).send('Page not found');
+  const notFoundHtml = `
+    <section>
+      <h2>Page not found</h2>
+      <p class="subtitle">That route doesn’t exist in this app.</p>
+      <a class="chip" href="/">Go back home</a>
+    </section>
+    <script>window.__NOT_FOUND__=true;</script>
+  `;
+  res.status(404).send(renderBase(notFoundHtml));
 });
 
 
